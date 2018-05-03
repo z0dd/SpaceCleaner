@@ -1,0 +1,45 @@
+<?php
+// Config
+
+// Окружение если не PRODACTION, то файлы не удаляются, а просто выдаются в консоль
+define('ENVIROMENT', 'DEV');
+
+// Минимальное количество свободного места для начала работы в байтах
+define('MIN_FREE_SPACE', 20*1024*1024*1024); // 20GB
+
+// Уровень логирования. Поддерживается ALL и ERROR.
+define('LOG_TYPE', 'ALL');
+
+
+// Флаг отправки ошибок на почту
+define('SEND_ERRRORS_TO_EMAIL', TRUE);
+// Email адреса на которые будут уходить письма со ошибками
+define('ADMIN_EMAILS', 'admin@test.test, test.test@test.test');
+// Папка где располагается PhpMailer
+define("PHPMAILER_PATH", '/home/user/www/system/library/PHPMailer/PHPMailerAutoload.php');
+// Почтовый конфиг
+define('MAIL_FROM', 'space_cleaner@test.test');
+define('MAIL_HOST', '192.168.1.1');
+define('MAIL_PORT', '25');
+define('MAIL_PASS', 'seret');
+define('MAIL_NAME', 'Space Cleaner');
+define('MAIL_CERT', 'tls');
+
+$nodes = [
+	// Список мест которые можно очищать в рамках очистки места
+	0 => [ 														// Приоритет очистки (чем ниже, тем выше вероятность того что будет очищен)
+		'path'		=> "/home/user/www/nginx/logs/", 			// Каталог в котором будет производиться очистка
+		'mask'		=> "(.log.\d)",								// Маска (regexp) для очистки файлов. Если указан NULL, удаляется всё содержимое
+		'date'		=> date("Y-m-d",strtotime("-3 day")),		// Файлы измененные после указанной даты игнорируются. Если NULL - дата не учитывается
+		'recurcive'	=> false,									// Очищать директорию рекурсивно
+		'comment'	=> "",										// Комментарий
+	],
+
+	10 => [
+		'path'		=> "/home/user/www/temp_files/",
+		'mask'		=> '/^foo_bar_.*?\.tmp$/',
+		'date'		=> date("Y-m-d",strtotime("-1 week")),
+		'recurcive'	=> false,
+		'comment'	=> "Products unzip",
+	],
+];
