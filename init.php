@@ -11,7 +11,7 @@ function handleError(Exception $exception)
 	echo "\nERROR:".$exception->getMessage()."\n";
 
 	if (defined('SEND_ERRRORS_TO_EMAIL') && SEND_ERRRORS_TO_EMAIL) {
-		sendEmailsNotofocation($exception->getMessage());
+		sendEmailsNotifocation("Текст ошибки: ".$exception->getMessage());
 	}
 
 	die();
@@ -22,7 +22,7 @@ function isProdaction()
 	return defined('ENVIROMENT') && ENVIROMENT == 'PRODACTION';
 }
 
-function sendEmailsNotofocation($text)
+function sendEmailsNotifocation($text)
 {
 	$adminEmails = explode(',', ADMIN_EMAILS);
 
@@ -78,7 +78,7 @@ function emailTemplate($text)
 			<div style="color:#1A3C7B;font-size:20px;margin-bottom:15px;">Ошибка во время плановой очистки места</div>
 
 			<div style="margin:15px 0">
-				Текст ошибки "<b>'.$text.'</b>"
+				"<b>'.$text.'</b>"
 			</div>
 		</div>';
 }
