@@ -13,7 +13,7 @@ class Node extends SpaceCleaner
 	
 	function __construct(array $config)
 	{
-		if (isset($config['path']) || !file_exists($config['path'])) 
+		if (!isset($config['path']) || !file_exists($config['path'])) 
 			throw new Exception("Не верно указана переменная 'path'", 1);
 
 		$this->path = $config['path'];
